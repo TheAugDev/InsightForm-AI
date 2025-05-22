@@ -1,0 +1,160 @@
+/* thank-you-style.css */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--background-light, #f8f9fa); /* Use variable from style.css or fallback */
+    text-align: center;
+    padding: 20px;
+    font-family: 'Open Sans', sans-serif; /* Ensure font consistency */
+}
+
+.thank-you-container {
+    max-width: 650px;
+    background-color: var(--background-white, #ffffff);
+    padding: 40px 50px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    animation: fadeInScaleUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeInScaleUp {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animation-container {
+    margin-bottom: 20px;
+    /* The Lottie player itself has inline styles for size, or you can style here */
+}
+
+.thank-you-content h1 {
+    font-family: 'Montserrat', sans-serif; /* Ensure font consistency */
+    color: var(--primary-color, #007bff);
+    font-size: 2.8em;
+    margin-bottom: 15px;
+    animation: slideInFromTop 0.6s ease-out 0.3s forwards;
+    opacity: 0; /* Initially hidden for animation */
+}
+
+.thank-you-content .subtitle {
+    font-size: 1.2em;
+    color: var(--text-color-medium, #6c757d);
+    margin-bottom: 30px;
+    animation: fadeIn 0.7s ease-out 0.8s forwards;
+    opacity: 0; /* Initially hidden for animation */
+}
+
+.next-steps {
+    text-align: left;
+    margin-bottom: 35px;
+    animation: fadeIn 0.7s ease-out 1.2s forwards;
+    opacity: 0; /* Initially hidden for animation */
+}
+
+.next-steps h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-color-dark, #343a40);
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color, #ced4da);
+    padding-bottom: 8px;
+}
+
+.next-steps ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.next-steps li {
+    margin-bottom: 12px;
+    font-size: 1.05em;
+    color: var(--text-color-dark, #343a40);
+    display: flex;
+    align-items: center;
+}
+
+.next-steps .step-number {
+    display: inline-block;
+    background-color: var(--primary-color, #007bff);
+    color: white;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    font-weight: bold;
+    margin-right: 12px;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.back-to-home-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: var(--primary-color, #007bff);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    animation: fadeIn 0.7s ease-out 1.6s forwards;
+    opacity: 0; /* Initially hidden for animation */
+}
+
+.back-to-home-btn:hover {
+    background-color: var(--primary-hover-color, #0056b3);
+    transform: translateY(-2px);
+}
+
+/* Simple CSS Animations */
+@keyframes slideInFromTop {
+    0% {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .thank-you-container {
+        padding: 25px 20px;
+    }
+    .thank-you-content h1 {
+        font-size: 2.2em;
+    }
+    .thank-you-content .subtitle {
+        font-size: 1.1em;
+    }
+    .next-steps h2 {
+        font-size: 1.3em;
+    }
+    .next-steps li {
+        font-size: 1em;
+    }
+    .back-to-home-btn {
+        font-size: 1em;
+        padding: 10px 25px;
+    }
+}
