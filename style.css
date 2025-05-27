@@ -1,131 +1,166 @@
-/* style.css - Initial Styling for InsightForm AI */
+/* style.css - InsightForm AI - Final Version */
 
-/* Define CSS variables for easy changes */
+/* --- CSS Variables (Theme) --- */
 :root {
-    --primary-color: #007bff; /* A vibrant blue */
-    --primary-hover-color: #0056b3;
-    --text-color-dark: #343a40;
-    --text-color-medium: #6c757d;
-    --text-color-light: #adb5bd;
-    --border-color: #ced4da;
-    --background-light: #f8f9fa;
-    --background-white: #ffffff;
-    --error-color: #dc3545;
-    --error-background: #f8d7da;
+    --primary-color: #007bff;       /* Vibrant blue */
+    --primary-hover-color: #0056b3; /* Darker blue for hover */
+    --secondary-color: #6c757d;     /* Neutral gray for secondary actions */
+    --secondary-hover-color: #5a6268; /* Darker gray for hover */
+    --text-color-dark: #343a40;     /* For main text, headings */
+    --text-color-medium: #6c757d;    /* For less prominent text, subtitles */
+    --text-color-light: #adb5bd;     /* For very subtle text */
+    --border-color: #ced4da;        /* Standard border color */
+    --background-light: #f8f9fa;    /* Page background */
+    --background-white: #ffffff;    /* Form background, inputs */
+    --error-color: #dc3545;         /* Red for errors */
+    --error-background: #f8d7da;    /* Light red background for error fields */
+    --success-color: #28a745;       /* Green for success (can be used later) */
+
+    --font-primary: 'Montserrat', sans-serif;
+    --font-secondary: 'Open Sans', sans-serif;
 }
 
 /* --- Global Styles & Typography --- */
 body {
-    font-family: 'Open Sans', sans-serif; /* Body font */
-    background-color: var(--background-light); /* Slightly lighter, cleaner background */
+    font-family: var(--font-secondary);
+    background-color: var(--background-light);
     margin: 0;
-    padding: 20px;
+    padding: 20px; /* Padding for when form isn't full width */
     color: var(--text-color-dark);
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 * {
-    box-sizing: border-box; /* Easier layout management */
+    box-sizing: border-box;
 }
 
-/* --- Form Container --- */
+/* --- Intro Screen Styles --- */
+#introScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-white); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+}
+
+#introScreen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.intro-content {
+    text-align: center;
+}
+
+.intro-tagline {
+    font-family: var(--font-secondary);
+    font-size: 1.2em;
+    color: var(--text-color-medium);
+    margin-top: 15px;
+    animation: fadeInText 1.5s ease-out 0.5s forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInText {
+    to { opacity: 1; }
+}
+
+/* --- Main Form Container & Initial Fade-in --- */
+#mainFormContainer {
+    opacity: 0; /* Initially hidden, JS will make it visible */
+    transition: opacity 0.8s ease-in 0.5s; /* Fade-in, delayed */
+}
+
+#mainFormContainer.visible {
+    opacity: 1;
+}
+
 .form-container {
-    max-width: 700px; /* Adjust as needed */
-    margin: 20px auto; /* Center the form */
-    padding: 25px;
-    background-color: #ffffff; /* White background for the form */
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 750px; /* Slightly wider */
+    margin: 20px auto;
+    padding: 30px 40px; /* More padding */
+    background-color: var(--background-white);
+    border-radius: 10px; /* Softer radius */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
 }
 
-/* --- Header & Progress Bar --- */
+/* --- Header & Visual Progress Bar --- */
 .form-header {
     text-align: center;
-    margin-bottom: 25px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #eee;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e9ecef; /* Lighter border */
 }
 
 .form-header h1 {
-    margin: 0 0 10px 0;
+    font-family: var(--font-primary);
+    margin: 0 0 15px 0;
     color: var(--text-color-dark);
-    font-family: 'Montserrat', sans-serif; /* Heading font */
+    font-size: 2em; /* Slightly larger */
 }
 
-/* style.css - Visual Progress Bar */
 .progress-bar-container {
     width: 100%;
-    height: 10px; /* Or your desired height */
+    height: 8px;
     background-color: #e9ecef;
-    border-radius: 5px;
-    margin-bottom: 5px; /* Space before the text "Page X of Y" */
-    overflow: hidden; /* Ensures the inner bar stays contained */
+    border-radius: 4px;
+    margin-bottom: 8px;
+    overflow: hidden;
 }
 
 .progress-bar-actual {
-    width: 0%; /* Will be updated by JavaScript */
+    width: 0%; /* Updated by JavaScript */
     height: 100%;
     background-color: var(--primary-color);
-    border-radius: 5px;
-    transition: width 0.4s ease; /* Smooth transition */
-}
-.progress-bar-text { /* Existing .progress-bar can be renamed or styled this way */
-    font-size: 0.9em;
-    color: var(--text-color-medium);
-    text-align: center; /* If you want the text centered below bar */
+    border-radius: 4px;
+    transition: width 0.4s ease;
 }
 
-.progress-bar {
+.progress-bar-text {
     font-size: 0.9em;
     color: var(--text-color-medium);
 }
 
 /* --- Fieldset & Legend --- */
 fieldset {
-    border: none; /* Remove default fieldset border */
-    padding: 0; /* Remove default fieldset padding */
-    margin-bottom: 20px;
-    transition: opacity 0.1s ease-out; /* Much faster, e.g., 0.1s or 0.15s */
+    border: none;
+    padding: 0;
+    margin-bottom: 25px;
+    /* For page transition opacity - can be re-enabled if a simple fade is desired */
+    /* transition: opacity 0.1s ease-out; */
 }
-
-.hidden-page {
-    opacity: 0;
-    transform: translateX(-20px); /* Example starting position for incoming page */
-    pointer-events: none; /* Prevent interaction with hidden pages */
-    position: absolute; /* Allow pages to overlap during transition */
-    width: 100%; /* Ensure it takes up the full width of its container */
-    left: 0; /* Align with the container */
-}
-
-.active-page {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto; /* Allow interaction */
-    position: relative; /* Or static, depending on layout needs */
-}
-
 
 legend {
-    font-size: 1.4em;
-    font-weight: bold;
+    font-family: var(--font-primary);
+    font-size: 1.6em; /* Slightly larger legend */
+    font-weight: 700; /* Bolder */
     color: var(--primary-color);
-    margin-bottom: 20px;
-    padding-bottom: 5px;
+    margin-bottom: 25px;
+    padding-bottom: 8px;
     border-bottom: 2px solid var(--primary-color);
     width: 100%;
-    font-family: 'Montserrat', sans-serif; /* Heading font */
 }
 
 /* --- Form Groups, Labels & Inputs --- */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 22px; /* Consistent spacing */
 }
 
 label {
     display: block;
-    font-weight: 600; /* From Open Sans if imported */
-    margin-bottom: 8px;
-    color: var(--text-color-dark); /* Darker, more readable labels */
+    font-weight: 600; /* Bolder labels */
+    margin-bottom: 10px; /* More space after label */
+    color: var(--text-color-dark);
+    font-size: 0.95rem;
 }
 
 input[type="text"],
@@ -135,12 +170,14 @@ input[type="url"],
 textarea,
 select {
     width: 100%;
-    padding: 12px;
+    padding: 12px 15px; /* Balanced padding */
     border: 1px solid var(--border-color);
-    border-radius: 4px;
-    font-size: 1em;
-    transition: border-color 0.3s ease;
-    background-color: var(--background-white); /* Ensure inputs are white */
+    border-radius: 6px; /* Slightly more rounded */
+    font-size: 1rem;
+    color: var(--text-color-dark);
+    background-color: var(--background-white);
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    line-height: 1.5;
 }
 
 input[type="text"]:focus,
@@ -150,243 +187,176 @@ input[type="url"]:focus,
 textarea:focus,
 select:focus {
     border-color: var(--primary-color);
-    outline: none; /* Remove default browser outline */
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Bootstrap-like focus */
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 textarea {
-    resize: vertical; /* Allow vertical resize, not horizontal */
-    min-height: 80px;
+    resize: vertical;
+    min-height: 100px; /* Slightly taller default */
 }
 
 select {
-    appearance: none; /* Remove default system appearance for select */
+    appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
     background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-size: 12px;
-    padding-right: 30px; /* Make space for the arrow */
+    background-position: right 15px center; /* Adjusted position */
+    background-size: 10px; /* Smaller arrow */
+    padding-right: 35px;
 }
 
-small {
+small { /* Helper text under inputs */
     display: block;
-    font-size: 0.85em;
+    font-size: 0.875em;
     color: var(--text-color-medium);
-    margin-top: 5px;
+    margin-top: 8px;
 }
+
+/* --- Checkbox Specific Styling --- */
+.checkbox-option {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-option input[type="checkbox"] {
+    width: auto; /* Override full width for checkboxes */
+    margin-right: 10px; /* Spacing between checkbox and label */
+    height: 1.1em; /* Make checkbox slightly larger */
+    width: 1.1em;
+    flex-shrink: 0; /* Prevent checkbox from shrinking */
+}
+
+label.checkbox-label {
+    font-weight: normal;
+    margin-bottom: 0; /* Remove bottom margin as it's on .checkbox-option */
+    font-size: 0.95rem; /* Match input text size */
+    color: var(--text-color-dark);
+}
+
+.other-toggle-option {
+    margin-top: 15px;
+}
+
+#mainGoals_other_container, #ecommerceDetailsGroup /* For conditional textareas */ {
+    padding-left: 25px; /* Indent the "Other" textarea slightly */
+    border-left: 2px solid #e9ecef; /* Visual cue for nested section */
+    margin-left: 5px; /* Align with checkboxes */
+}
+
 
 /* --- Navigation Buttons --- */
 .navigation-buttons {
     display: flex;
-    justify-content: space-between; /* Puts space between prev and next */
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
+    justify-content: space-between;
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid #e9ecef;
 }
 
-button {
-    padding: 12px 25px;
-    font-size: 1em;
-    font-weight: bold;
+button { /* General button style */
+    padding: 12px 28px; /* Balanced padding */
+    font-size: 1rem;
+    font-weight: 600; /* From Open Sans */
+    font-family: var(--font-secondary); /* Ensure consistent font */
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease; /* Added box-shadow transition */
-    text-transform: uppercase; /* Uppercase text */
-    letter-spacing: 0.5px; /* Added letter spacing */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Added subtle box shadow */
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
+
+button:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
 
 button#prevBtn {
-    background-color: #6c757d; /* A neutral gray */
+    background-color: var(--secondary-color);
     color: white;
 }
 
-button#prevBtn:hover {
-    background-color: #5a6268;
+button#prevBtn:hover:not(:disabled) {
+    background-color: var(--secondary-hover-color);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-button#nextBtn, button#submitBtn /* Assuming submitBtn might be the ID for the submit button */ {
+button#nextBtn, button#submitBtn { /* submitBtn is the ID for the last button */
     background-color: var(--primary-color);
     color: white;
 }
 
-button#nextBtn:hover, button#submitBtn:hover {
+button#nextBtn:hover:not(:disabled), button#submitBtn:hover:not(:disabled) {
     background-color: var(--primary-hover-color);
+    box-shadow: 0 4px 8px rgba(var(--primary-color), 0.3); /* Subtle glow */
 }
 
-button:active {
-    transform: translateY(1px); /* Slight press effect */
-    box-shadow: 0 1px 2px rgba(0,0,0,0.15); /* Slightly adjusted shadow on press */
+button:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
-
 
 /* --- Footer --- */
 .form-footer {
     text-align: center;
-    margin-top: 30px;
-    font-size: 0.9em;
+    margin-top: 40px;
+    font-size: 0.85em;
     color: var(--text-color-medium);
 }
 
-/* --- Error Styling (already defined, but ensure it fits) --- */
-.input-error {
+/* --- Error Styling --- */
+.input-error { /* Applied to input, select, textarea */
     border-color: var(--error-color) !important;
-    background-color: var(--error-background) !important;
+    background-color: var(--error-background) !important; /* Optional: subtle background for error field */
 }
 
-.error-message {
+.error-message { /* The span created by JS */
     color: var(--error-color);
-    font-size: 0.9em;
-    margin-top: 5px;
-    display: block;
+    font-size: 0.875em; /* Small but readable */
+    margin-top: 6px;
+    display: block; /* Make it take its own line */
+    font-weight: 600;
 }
 
-/* --- Responsive Design --- */
+/* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
     body {
         padding: 10px;
     }
-
     .form-container {
-        margin: 10px auto;
-        padding: 20px; /* Adjusted padding for smaller screens */
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); /* Softer shadow on mobile */
+        margin: 10px;
+        padding: 20px;
     }
-
     .form-header h1 {
-        font-size: 1.8em; /* Slightly smaller heading */
+        font-size: 1.8em;
     }
-
     legend {
-        font-size: 1.2em; /* Smaller legend */
+        font-size: 1.3em;
     }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    input[type="url"],
-    textarea,
-    select {
-        padding: 10px;
-        font-size: 0.95em;
-    }
-
     button {
         padding: 10px 20px;
-        font-size: 0.95em;
+        font-size: 0.95rem;
     }
-
-    .navigation-buttons {
-        flex-direction: column; /* Stack buttons on smaller screens */
-        gap: 10px; /* Add space between stacked buttons */
-    }
-
-    button#prevBtn,
-    button#nextBtn,
-    button#submitBtn {
-        width: 100%; /* Make buttons full width */
-    }
-
-    /* Adjust progress bar text if needed */
-    .progress-bar-text {
-        font-size: 0.85em;
-    }
+    /* Stack navigation buttons on small screens if needed */
+    /* .navigation-buttons { flex-direction: column; gap: 10px; } */
+    /* .navigation-buttons button { width: 100%; } */
 }
 
 @media (max-width: 480px) {
     .form-header h1 {
-        font-size: 1.5em;
+        font-size: 1.6em;
     }
-
     legend {
-        font-size: 1.1em;
+        font-size: 1.2em;
     }
-
-    .form-container {
-        padding: 15px;
+    #mainGoals_other_container, #ecommerceDetailsGroup {
+        padding-left: 10px; /* Reduce indent on very small screens */
     }
-
-    /* Further reduce padding for very small screens if necessary */
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    input[type="url"],
-    textarea,
-    select,
-    button {
-        font-size: 0.9em;
-    }
-}
-
-/* style.css - ==== INTRO SCREEN STYLES ==== */
-#introScreen {
-    position: fixed; /* Cover the entire viewport */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #ffffff; /* Or a theme color, e.g., var(--primary-color) for a full splash */
-    /* For a slightly off-white, try var(--background-light) if you want the form to 'pop' more when it appears */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999; /* Ensure it's on top of everything */
-    opacity: 1;
-    transition: opacity 0.8s ease-out, visibility 0.8s ease-out; /* For fade-out */
-}
-
-#introScreen.hidden {
-    opacity: 0;
-    visibility: hidden; /* Remove from layout after transition */
-}
-
-.intro-content {
-    text-align: center;
-    color: var(--primary-color, #007bff); /* Using primary color for text */
-}
-
-/* If using an image logo instead of Lottie */
-.intro-logo {
-    max-width: 150px; /* Adjust as needed */
-    margin-bottom: 20px;
-    animation: subtlePulse 2s infinite ease-in-out;
-}
-
-.intro-content h1 { /* If you use a text title */
-    font-family: 'Montserrat', sans-serif;
-    font-size: 2.5em;
-    margin-bottom: 10px;
-    color: var(--primary-color, #007bff);
-}
-
-.intro-tagline {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 1.2em;
-    color: var(--text-color-medium, #6c757d);
-    margin-top: 15px; /* Space from Lottie/logo */
-    animation: fadeInText 1.5s ease-out 0.5s forwards; /* Text fades in after Lottie starts */
-    opacity: 0;
-}
-
-/* Keyframe animations for intro elements (optional) */
-@keyframes subtlePulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.03); }
-}
-
-@keyframes fadeInText {
-    to { opacity: 1; }
-}
-
-/* Styling for the main form container to fade in */
-#mainFormContainer {
-    opacity: 0; /* Initially hidden via HTML style attribute */
-    transition: opacity 0.8s ease-in 0.5s; /* Fade-in transition, delayed slightly */
-}
-
-#mainFormContainer.visible {
-    opacity: 1;
 }

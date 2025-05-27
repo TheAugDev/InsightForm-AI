@@ -1,452 +1,267 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InsightForm AI - Project Discovery</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-  </head>
-  <body>
+    <link rel="stylesheet" href="style.css">
+    </head>
+<body>
     <div id="introScreen">
         <div class="intro-content">
             <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
-            <dotlottie-player src="animations/Intro_Animation.json" background="transparent" speed="1" style="width: 200px; height: 200px; margin: 0 auto;" loop autoplay></dotlottie-player>
+            <dotlottie-player src="./animations/Intro_Animation.json" background="transparent" speed="1" style="width: 200px; height: 200px; margin: 0 auto;" loop autoplay></dotlottie-player>
             <p class="intro-tagline">Crafting clarity for your project...</p>
         </div>
     </div>
     <div class="form-container" id="mainFormContainer">
-      <div class="form-header">
+        <div class="form-header">
             <h1>Project Discovery</h1>
-            <div class="progress-bar">
-              <div class="progress-bar-container">
+            <div class="progress-bar-container">
                 <div class="progress-bar-actual" id="progressBarActual"></div>
-              </div>
-              <div class="progress-bar-text">Page <span id="currentPage">1</span> of <span id="totalPages">6</span></div>
+            </div>
+            <div class="progress-bar-text">
+                Page <span id="currentPage">1</span> of <span id="totalPages">6</span>
             </div>
         </div>
 
-      <fieldset id="page1">
+        <fieldset id="page1">
             <legend>Page 1: Your Contact & Company Information</legend>
+            <div class="form-group">
+                <label for="clientName">Full Name:</label>
+                <input type="text" id="clientName" name="clientName" required>
+            </div>
+            <div class="form-group">
+                <label for="companyName">Company Name (if applicable):</label>
+                <input type="text" id="companyName" name="companyName">
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+                <small>We'll use this to send you a copy of your submission and for all project communication.</small>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number (Optional):</label>
+                <input type="tel" id="phone" name="phone">
+            </div>
+            <div class="form-group">
+                <label for="currentWebsite">Current Website URL (if you have one):</label>
+                <input type="url" id="currentWebsite" name="currentWebsite" placeholder="https://www.example.com">
+            </div>
+        </fieldset>
 
-        <div class="form-group">
-          <label for="clientName">Full Name:</label>
-          <input type="text" id="clientName" name="clientName" required />
-        </div>
+        <fieldset id="page2" style="display:none;">
+            <legend>Page 2: Project Overview</legend>
+            <div class="form-group">
+                <label for="projectName">Project Name (if it has one already):</label>
+                <input type="text" id="projectName" name="projectName">
+                <small>Don't worry if it's a working title!</small>
+            </div>
+            <div class="form-group">
+                <label for="projectBrief">Briefly describe your project or website idea:</label>
+                <textarea id="projectBrief" name="projectBrief" rows="6" required placeholder="e.g., We want to build a modern e-commerce website to sell handmade artisanal pottery..."></textarea>
+                <small>What are you looking to create or improve? The more detail, the better!</small>
+            </div>
 
-        <div class="form-group">
-          <label for="companyName">Company Name (if applicable):</label>
-          <input type="text" id="companyName" name="companyName" />
-        </div>
+            <div class="form-group">
+                <label for="websiteType">What type of website are you planning?</label>
+                <select id="websiteType" name="websiteType" required>
+                    <option value="">-- Select Website Type --</option>
+                    <option value="multi-page">Multi-Page Website (Traditional website with multiple pages like Home, About, Services, Contact, etc.)</option>
+                    <option value="landing-page">Landing Page (A single, focused page designed for a specific campaign or goal)</option>
+                    <option value="spa">Single Page Application (SPA) (Content loads dynamically on one page, offering a fluid app-like experience)</option>
+                    <option value="ecommerce-platform">E-commerce Platform (Focus on selling products, with cart, checkout, etc.)</option>
+                    <option value="blog-or-publication">Blog / Online Publication</option>
+                    <option value="portfolio-site">Portfolio Website</option>
+                    <option value="not-sure">Not Sure / Need Recommendation</option>
+                    <option value="other">Other (Please specify below)</option>
+                </select>
+                <small>This helps us understand the overall structure and scope.</small>
+            </div>
+            <div class="form-group" id="websiteTypeOtherContainer" style="display:none; margin-top:10px; padding-left: 20px;">
+                <label for="websiteTypeOtherText">If "Other", please specify website type:</label>
+                <textarea id="websiteTypeOtherText" name="websiteTypeOtherText" rows="2" placeholder="Describe the website type"></textarea>
+            </div>
 
-        <div class="form-group">
-          <label for="email">Email Address:</label>
-          <input type="email" id="email" name="email" required />
-          <small
-            >We'll use this to send you a copy of your submission and for all
-            project communication.</small
-          >
-        </div>
+            <div class="form-group">
+                <label>What are the primary goals you want to achieve with this project? (Select all that apply)</label>
+                <div class="checkbox-option"><input type="checkbox" id="goal_sales" name="mainGoals_selected" value="Increase Online Sales"> <label for="goal_sales" class="checkbox-label">Increase Online Sales</label></div>
+                <div class="checkbox-option"><input type="checkbox" id="goal_leads" name="mainGoals_selected" value="Generate More Leads"> <label for="goal_leads" class="checkbox-label">Generate More Leads</label></div>
+                <div class="checkbox-option"><input type="checkbox" id="goal_awareness" name="mainGoals_selected" value="Build Brand Awareness"> <label for="goal_awareness" class="checkbox-label">Build Brand Awareness</label></div>
+                <div class="checkbox-option"><input type="checkbox" id="goal_info" name="mainGoals_selected" value="Provide Information to Users"> <label for="goal_info" class="checkbox-label">Provide Information to Users</label></div>
+                <div class="checkbox-option"><input type="checkbox" id="goal_engagement" name="mainGoals_selected" value="Improve User Engagement"> <label for="goal_engagement" class="checkbox-label">Improve User Engagement</label></div>
+                <div class="checkbox-option"><input type="checkbox" id="goal_processes" name="mainGoals_selected" value="Streamline Internal Processes"> <label for="goal_processes" class="checkbox-label">Streamline Internal Processes</label></div>
+                
+                <div class="checkbox-option other-toggle-option">
+                    <input type="checkbox" id="goal_other_toggle" name="mainGoals_other_toggle"> 
+                    <label for="goal_other_toggle" class="checkbox-label">Other (Please specify)</label>
+                </div>
+                <div id="mainGoals_other_container" class="form-group" style="display:none; margin-top:10px; padding-left: 20px;">
+                    <textarea id="mainGoals_other_text" name="mainGoals_other_text" rows="3" placeholder="Please describe other goals here"></textarea>
+                </div>
+                <small>Select your key objectives. What does success look like?</small>
+            </div>
+            <div class="form-group">
+                <label for="problemSolved">What problem(s) will this project solve for your users or your business?</label>
+                <textarea id="problemSolved" name="problemSolved" rows="4" placeholder="e.g., Users currently can't easily find unique pottery online..."></textarea>
+                <small>Understanding the 'why' helps create a more impactful solution.</small>
+            </div>
+            <div class="form-group">
+                <label for="projectTimeline">Do you have a specific timeframe or deadline in mind for this project?</label>
+                <input type="text" id="projectTimeline" name="projectTimeline" placeholder="e.g., Within 3 months, ready for Q4 launch, flexible...">
+                <small>This helps us understand urgency and plan accordingly.</small>
+            </div>
+            <div class="form-group">
+                <label for="projectBudget">Do you have an estimated budget range for this project? (Optional)</label>
+                <select id="projectBudget" name="projectBudget">
+                    <option value="">Please select a range</option>
+                    <option value="<5000">&lt; $5,000</option>
+                    <option value="5000-10000">$5,000 - $10,000</option>
+                    <option value="10000-20000">$10,000 - $20,000</option>
+                    <option value="20000-50000">$20,000 - $50,000</option>
+                    <option value=">50000">&gt; $50,000</option>
+                    <option value="tbd">To be determined</option>
+                </select>
+                <small>Knowing this helps tailor a realistic solution. If unsure, select "To be determined."</small>
+            </div>
+        </fieldset>
 
-        <div class="form-group">
-          <label for="phone">Phone Number (Optional):</label>
-          <input type="tel" id="phone" name="phone" />
-        </div>
-
-        <div class="form-group">
-          <label for="currentWebsite"
-            >Current Website URL (if you have one):</label
-          >
-          <input
-            type="url"
-            id="currentWebsite"
-            name="currentWebsite"
-            placeholder="https://www.example.com"
-          />
-        </div>
-      </fieldset>
-
-      <fieldset id="page2" style="display: none">
-        <legend>Page 2: Project Overview</legend>
-
-        <div class="form-group">
-          <label for="projectName">Project Name (if it has one already):</label>
-          <input type="text" id="projectName" name="projectName" />
-          <small>Don't worry if it's a working title!</small>
-        </div>
-
-        <div class="form-group">
-          <label for="projectBrief"
-            >Briefly describe your project or website idea:</label
-          >
-          <textarea
-            id="projectBrief"
-            name="projectBrief"
-            rows="6"
-            required
-            placeholder="e.g., We want to build a modern e-commerce website to sell handmade artisanal pottery. Key features will include..."
-          ></textarea>
-          <small
-            >What are you looking to create or improve? The more detail, the
-            better!</small
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="mainGoals"
-            >What are the primary goals you want to achieve with this
-            project?</label
-          >
-          <textarea
-            id="mainGoals"
-            name="mainGoals"
-            rows="4"
-            required
-            placeholder="e.g., Increase online sales by 30%, generate more qualified leads, establish brand presence, provide information to users..."
-          ></textarea>
-          <small>List 2-3 key objectives. What does success look like?</small>
-        </div>
-
-        <div class="form-group">
-          <label for="problemSolved"
-            >What problem(s) will this project solve for your users or your
-            business?</label
-          >
-          <textarea
-            id="problemSolved"
-            name="problemSolved"
-            rows="4"
-            placeholder="e.g., Users currently can't easily find unique pottery online, our current website is outdated and doesn't drive sales..."
-          ></textarea>
-          <small
-            >Understanding the 'why' helps create a more impactful
-            solution.</small
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="projectTimeline"
-            >Do you have a specific timeframe or deadline in mind for this
-            project?</label
-          >
-          <input
-            type="text"
-            id="projectTimeline"
-            name="projectTimeline"
-            placeholder="e.g., Within 3 months, ready for Q4 launch, flexible..."
-          />
-          <small>This helps us understand urgency and plan accordingly.</small>
-        </div>
-
-        <div class="form-group">
-          <label for="projectBudget"
-            >Do you have an estimated budget range for this project?
-            (Optional)</label
-          >
-          <select id="projectBudget" name="projectBudget">
-            <option value="">Please select a range</option>
-            <option value="<5000">&lt; $5,000</option>
-            <option value="5000-10000">$5,000 - $10,000</option>
-            <option value="10000-20000">$10,000 - $20,000</option>
-            <option value="20000-50000">$20,000 - $50,000</option>
-            <option value=">50000">&gt; $50,000</option>
-            <option value="tbd">To be determined</option>
-          </select>
-          <small
-            >Knowing this helps tailor a realistic solution. If unsure, select
-            "To be determined."</small
-          >
-        </div>
-      </fieldset>
-
-      <fieldset id="page3" style="display:none;">
+        <fieldset id="page3" style="display:none;">
             <legend>Page 3: Understanding Your Target Audience</legend>
+            <div class="form-group">
+                <label for="primaryAudience">Who is the primary target audience for this project?</label>
+                <textarea id="primaryAudience" name="primaryAudience" rows="4" required placeholder="e.g., Young professionals aged 25-40 interested in sustainable living..."></textarea>
+                <small>Be as specific as possible. Think about demographics, interests, and behaviors.</small>
+            </div>
+            <div class="form-group">
+                <label for="audienceNeeds">What are the main needs or goals of your target audience related to what this project will offer?</label>
+                <textarea id="audienceNeeds" name="audienceNeeds" rows="4" placeholder="e.g., They need an easy way to purchase eco-friendly products..."></textarea>
+                <small>What problems are they trying to solve, or what are they hoping to achieve?</small>
+            </div>
+            <div class="form-group">
+                <label for="audiencePainPoints">What are their current pain points or frustrations that this project can address?</label>
+                <textarea id="audiencePainPoints" name="audiencePainPoints" rows="4" placeholder="e.g., Existing solutions are too complicated..."></textarea>
+                <small>What challenges do they face that your project can alleviate?</small>
+            </div>
+            <div class="form-group">
+                <label for="secondaryAudience">Are there any secondary target audiences we should also consider? (Optional)</label>
+                <input type="text" id="secondaryAudience" name="secondaryAudience" placeholder="e.g., Media/press, potential investors...">
+            </div>
+        </fieldset>
 
-        <div class="form-group">
-          <label for="primaryAudience"
-            >Who is the primary target audience for this project?</label
-          >
-          <textarea
-            id="primaryAudience"
-            name="primaryAudience"
-            rows="4"
-            required
-            placeholder="e.g., Young professionals aged 25-40 interested in sustainable living, small business owners looking for marketing tools, existing customers of our brand..."
-          ></textarea>
-          <small
-            >Be as specific as possible. Think about demographics, interests,
-            and behaviors.</small
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="audienceNeeds"
-            >What are the main needs or goals of your target audience related to
-            what this project will offer?</label
-          >
-          <textarea
-            id="audienceNeeds"
-            name="audienceNeeds"
-            rows="4"
-            placeholder="e.g., They need an easy way to purchase eco-friendly products, they want to learn how to grow their business online, they need quick access to support documentation..."
-          ></textarea>
-          <small
-            >What problems are they trying to solve, or what are they hoping to
-            achieve?</small
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="audiencePainPoints"
-            >What are their current pain points or frustrations that this
-            project can address?</label
-          >
-          <textarea
-            id="audiencePainPoints"
-            name="audiencePainPoints"
-            rows="4"
-            placeholder="e.g., Existing solutions are too complicated, they can't find reliable information, current processes are too slow..."
-          ></textarea>
-          <small
-            >What challenges do they face that your project can
-            alleviate?</small
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="secondaryAudience"
-            >Are there any secondary target audiences we should also consider?
-            (Optional)</label
-          >
-          <input
-            type="text"
-            id="secondaryAudience"
-            name="secondaryAudience"
-            placeholder="e.g., Media/press, potential investors, industry partners..."
-          />
-        </div>
-      </fieldset>
-
-      <fieldset id="page4" style="display:none;">
+        <fieldset id="page4" style="display:none;">
             <legend>Page 4: Design Preferences & Branding</legend>
+            <div class="form-group">
+                <label for="visualStyle">Describe the desired visual style or feel for your project:</label>
+                <input type="text" id="visualStyle" name="visualStyle" placeholder="e.g., Modern & minimalist, playful & vibrant...">
+                <small>What overall impression should it create? Think adjectives.</small>
+            </div>
+            <div class="form-group">
+                <label for="colorPreferences">Are there any specific colors or color palettes you like or dislike?</label>
+                <textarea id="colorPreferences" name="colorPreferences" rows="3" placeholder="e.g., Like: blues and greens. Dislike: orange..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="typographyPreferences">Any preferences for typography (fonts)?</label>
+                <input type="text" id="typographyPreferences" name="typographyPreferences" placeholder="e.g., Modern sans-serif, classic serif... or leave it to us!">
+                <small>If you have specific fonts in mind or general styles, let us know.</small>
+            </div>
+            <div class="form-group">
+                <label for="inspirationWebsites">Please list 2-3 websites you find visually appealing or inspirational (and why, if possible):</label>
+                <textarea id="inspirationWebsites" name="inspirationWebsites" rows="4" placeholder="e.g., www.example1.com - love their clean layout..."></textarea>
+                <small>These don't have to be in your industry.</small>
+            </div>
+            <div class="form-group">
+                <label for="dislikedWebsites">Are there any websites or design elements you particularly dislike? (Optional)</label>
+                <textarea id="dislikedWebsites" name="dislikedWebsites" rows="3" placeholder="e.g., www.example3.com - too cluttered..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="brandAssets">Do you have existing brand guidelines, a logo, or other brand assets?</label>
+                <select id="brandAssets" name="brandAssets">
+                    <option value="">Select an option</option>
+                    <option value="yes_full_guidelines">Yes, we have full brand guidelines.</option>
+                    <option value="yes_logo_colors">Yes, we have a logo and some brand colors.</option>
+                    <option value="yes_logo_only">Yes, we have a logo only.</option>
+                    <option value="no_needs_defining">No, this needs to be defined/created.</option>
+                </select>
+                <small>If yes, you'll be able to share these files with us after submitting this form.</small>
+            </div>
+        </fieldset>
 
-        <div class="form-group">
-          <label for="visualStyle"
-            >Describe the desired visual style or feel for your project:</label
-          >
-          <input
-            type="text"
-            id="visualStyle"
-            name="visualStyle"
-            placeholder="e.g., Modern & minimalist, playful & vibrant, corporate & trustworthy, elegant & sophisticated..."
-          />
-          <small
-            >What overall impression should it create? Think adjectives.</small
-          >
-        </div>
+        <fieldset id="page5" style="display:none;">
+            <legend>Page 5: Scope & Key Features</legend>
+            <div class="form-group">
+                <label for="mustHaveFeatures">What are the absolute "must-have" features for this project?</label>
+                <textarea id="mustHaveFeatures" name="mustHaveFeatures" rows="5" required placeholder="e.g., User registration & login, blog section, contact form..."></textarea>
+                <small>List the core functionalities without which the project wouldn't meet its main goals.</small>
+            </div>
+            <div class="form-group">
+                <label for="niceToHaveFeatures">Are there any "nice-to-have" features that aren't critical but would be beneficial if budget/time allows? (Optional)</label>
+                <textarea id="niceToHaveFeatures" name="niceToHaveFeatures" rows="4" placeholder="e.g., Advanced search filters, live chat..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="integrations">Are there any integrations needed with third-party services?</label>
+                <input type="text" id="integrations" name="integrations" placeholder="e.g., Social media feeds, Google Maps, Mailchimp...">
+                <small>Think about any external tools or platforms this project needs to connect with.</small>
+            </div>
+            <div class="form-group">
+                <label for="ecommerce">Will this project involve e-commerce (selling products or services directly online)?</label>
+                <select id="ecommerce" name="ecommerce">
+                    <option value="">Select an option</option>
+                    <option value="yes_full_store">Yes, a full online store is needed.</option>
+                    <option value="yes_simple_payments">Yes, simple payment buttons or a few items.</option>
+                    <option value="maybe_later">Maybe in the future, but not initially.</option>
+                    <option value="no">No e-commerce functionality needed.</option>
+                </select>
+            </div>
+            <div class="form-group" id="ecommerceDetailsGroup" style="display:none;">
+                <label for="ecommerceDetails">If yes to e-commerce, briefly describe your needs:</label>
+                <textarea id="ecommerceDetails" name="ecommerceDetails" rows="3" placeholder="e.g., Number of products, shipping requirements..."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="contentProvision">How will content (text, images, videos) for the website be provided?</label>
+                <select id="contentProvision" name="contentProvision">
+                    <option value="">Select an option</option>
+                    <option value="client_provides_all">Client will provide all content, ready for input.</option>
+                    <option value="client_provides_some">Client will provide some, developer to assist with placeholders/sourcing.</option>
+                    <option value="ai_placeholders_agreed">AI-generated placeholders to be used initially, client to replace.</option>
+                    <option value="copywriting_needed">Copywriting services are needed.</option>
+                    <option value="stock_imagery_needed">Stock imagery sourcing is needed.</option>
+                </select>
+                <small>Knowing this upfront is key.</small>
+            </div>
+        </fieldset>
 
-        <div class="form-group">
-          <label for="colorPreferences"
-            >Are there any specific colors or color palettes you like or
-            dislike?</label
-          >
-          <textarea
-            id="colorPreferences"
-            name="colorPreferences"
-            rows="3"
-            placeholder="e.g., Like: blues and greens. Dislike: orange. Prefer earthy tones or bright colors?"
-          ></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="typographyPreferences"
-            >Any preferences for typography (fonts)?</label
-          >
-          <input
-            type="text"
-            id="typographyPreferences"
-            name="typographyPreferences"
-            placeholder="e.g., Modern sans-serif, classic serif, handwritten script fonts... or leave it to us!"
-          />
-          <small
-            >If you have specific fonts in mind or general styles, let us
-            know.</small
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="inspirationWebsites"
-            >Please list 2-3 websites you find visually appealing or
-            inspirational (and why, if possible):</label
-          >
-          <textarea
-            id="inspirationWebsites"
-            name="inspirationWebsites"
-            rows="4"
-            placeholder="e.g., www.example1.com - love their clean layout. www.example2.com - great use of color."
-          ></textarea>
-          <small>These don't have to be in your industry.</small>
-        </div>
-
-        <div class="form-group">
-          <label for="dislikedWebsites"
-            >Are there any websites or design elements you particularly dislike?
-            (Optional)</label
-          >
-          <textarea
-            id="dislikedWebsites"
-            name="dislikedWebsites"
-            rows="3"
-            placeholder="e.g., www.example3.com - too cluttered. Dislike: carousel sliders, overly dark themes..."
-          ></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="brandAssets"
-            >Do you have existing brand guidelines, a logo, or other brand
-            assets?</label
-          >
-          <select id="brandAssets" name="brandAssets">
-            <option value="">Select an option</option>
-            <option value="yes_full_guidelines">
-              Yes, we have full brand guidelines.
-            </option>
-            <option value="yes_logo_colors">
-              Yes, we have a logo and some brand colors.
-            </option>
-            <option value="yes_logo_only">Yes, we have a logo only.</option>
-            <option value="no_needs_defining">
-              No, this needs to be defined/created.
-            </option>
-          </select>
-          <small
-            >If yes, you'll be able to share these files with us after
-            submitting this form.</small
-          >
-        </div>
-      </fieldset>
-
-      <fieldset id="page5" style="display:none;"> <legend>Page 5: Scope & Key Features</legend>
-
-    <div class="form-group">
-        <label for="mustHaveFeatures">What are the absolute "must-have" features for this project?</label>
-        <textarea id="mustHaveFeatures" name="mustHaveFeatures" rows="5" required placeholder="e.g., User registration & login, blog section, contact form, photo gallery, product pages, shopping cart, search functionality..."></textarea>
-        <small>List the core functionalities without which the project wouldn't meet its main goals.</small>
-    </div>
-
-    <div class="form-group">
-        <label for="niceToHaveFeatures">Are there any "nice-to-have" features that aren't critical but would be beneficial if budget/time allows? (Optional)</label>
-        <textarea id="niceToHaveFeatures" name="niceToHaveFeatures" rows="4" placeholder="e.g., Advanced search filters, live chat, forum, multilingual support, animations..."></textarea>
-    </div>
-
-    <div class="form-group">
-        <label for="integrations">Are there any integrations needed with third-party services?</label>
-        <input type="text" id="integrations" name="integrations" placeholder="e.g., Social media feeds, Google Maps, Mailchimp, Salesforce, Stripe/PayPal...">
-        <small>Think about any external tools or platforms this project needs to connect with.</small>
-    </div>
-
-    <div class="form-group">
-        <label for="ecommerce">Will this project involve e-commerce (selling products or services directly online)?</label>
-        <select id="ecommerce" name="ecommerce">
-            <option value="">Select an option</option>
-            <option value="yes_full_store">Yes, a full online store is needed.</option>
-            <option value="yes_simple_payments">Yes, simple payment buttons or a few items.</option>
-            <option value="maybe_later">Maybe in the future, but not initially.</option>
-            <option value="no">No e-commerce functionality needed.</option>
-        </select>
-    </div>
-
-    <div class="form-group" id="ecommerceDetailsGroup" style="display:none;">
-        <label for="ecommerceDetails">If yes to e-commerce, briefly describe your needs:</label>
-        <textarea id="ecommerceDetails" name="ecommerceDetails" rows="3" placeholder="e.g., Number of products, types of products (physical/digital), shipping requirements, payment gateway preferences..."></textarea>
-    </div>
-    
-    <div class="form-group">
-        <label for="contentProvision">How will content (text, images, videos) for the website be provided?</label>
-        <select id="contentProvision" name="contentProvision">
-            <option value="">Select an option</option>
-            <option value="client_provides_all">Client will provide all content, ready for input.</option>
-            <option value="client_provides_some">Client will provide some, developer to assist with placeholders/sourcing.</option>
-            <option value="ai_placeholders_agreed">AI-generated placeholders to be used initially, client to replace.</option>
-            <option value="copywriting_needed">Copywriting services are needed.</option>
-            <option value="stock_imagery_needed">Stock imagery sourcing is needed.</option>
-        </select>
-        <small>Knowing this upfront is key.</small>
-    </div>
-
-</fieldset>
-
-      <fieldset id="page6" style="display:none;">
+        <fieldset id="page6" style="display:none;">
             <legend>Page 6: Competitors & Final Thoughts</legend>
+            <div class="form-group">
+                <label for="competitors">Please list 2-3 of your main competitors and their website URLs (if known):</label>
+                <textarea id="competitors" name="competitors" rows="4" placeholder="e.g., Competitor A (www.competitorA.com) - They do X well..."></textarea>
+                <small>What do you like or dislike about their online presence?</small>
+            </div>
+            <div class="form-group">
+                <label for="differentiators">What makes your offering or business different or better than your competitors?</label>
+                <textarea id="differentiators" name="differentiators" rows="3" placeholder="e.g., Our unique approach, better customer service..."></textarea>
+                <small>This is your unique selling proposition (USP).</small>
+            </div>
+            <div class="form-group">
+                <label for="additionalInfo">Is there anything else you'd like to share about your project, or any questions you have for us at this stage?</label>
+                <textarea id="additionalInfo" name="additionalInfo" rows="5" placeholder="Feel free to include any details, concerns, or ideas not covered elsewhere."></textarea>
+            </div>
+            <div class="form-group">
+                <label for="referralSource">How did you hear about us? (Optional)</label>
+                <input type="text" id="referralSource" name="referralSource" placeholder="e.g., Google search, referral from [Name]...">
+                <small>This helps us understand what's working!</small>
+            </div>
+            <div class="form-group">
+                <p>Thank you for taking the time to complete this discovery form! We'll review your responses carefully and get back to you soon.</p>
+                <p>Clicking "Submit" will send your information to us.</p>
+            </div>
+        </fieldset>
 
-        <div class="form-group">
-          <label for="competitors"
-            >Please list 2-3 of your main competitors and their website URLs (if
-            known):</label
-          >
-          <textarea
-            id="competitors"
-            name="competitors"
-            rows="4"
-            placeholder="e.g., Competitor A (www.competitorA.com) - They do X well. Competitor B (www.competitorB.com) - Their design is outdated."
-          ></textarea>
-          <small
-            >What do you like or dislike about their online presence?</small
-          >
-        </div>
-
-        <div class="form-group">
-          <label for="differentiators"
-            >What makes your offering or business different or better than your
-            competitors?</label
-          >
-          <textarea
-            id="differentiators"
-            name="differentiators"
-            rows="3"
-            placeholder="e.g., Our unique approach, better customer service, specific features, pricing..."
-          ></textarea>
-          <small>This is your unique selling proposition (USP).</small>
-        </div>
-
-        <div class="form-group">
-          <label for="additionalInfo"
-            >Is there anything else you'd like to share about your project, or
-            any questions you have for us at this stage?</label
-          >
-          <textarea
-            id="additionalInfo"
-            name="additionalInfo"
-            rows="5"
-            placeholder="Feel free to include any details, concerns, or ideas not covered elsewhere."
-          ></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="referralSource"
-            >How did you hear about us? (Optional)</label
-          >
-          <input
-            type="text"
-            id="referralSource"
-            name="referralSource"
-            placeholder="e.g., Google search, referral from [Name], social media..."
-          />
-          <small>This helps us understand what's working!</small>
-        </div>
-
-        <div class="form-group">
-          <p>
-            Thank you for taking the time to complete this discovery form! We'll
-            review your responses carefully and get back to you soon.
-          </p>
-          <p>Clicking "Submit" will send your information to us.</p>
-        </div>
-      </fieldset>
-
-      <div class="navigation-buttons">
+        <div class="navigation-buttons">
             <button type="button" id="prevBtn" style="display:none;">Previous</button>
             <button type="button" id="nextBtn">Next</button>
         </div>
@@ -455,5 +270,5 @@
             <p><small>Your information is confidential and will only be used for this project.</small></p>
         </div>
     </div> <script src="script.js"></script>
-  </body>
+</body>
 </html>
